@@ -1,0 +1,11 @@
+<div class="card mb-3" for="{{apartment.id}}" >
+  <img src="media/{{ apartment.first_photo }}" width="3232" height="300" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{apartment}}</h5>
+    {% if apartment.currently_rented %}
+      <p class="card-text">Rented For:  </p>
+    {% endif %}
+    <p class="card-text"><small class="text-muted"> {{apartment.notes}}</small></p>
+    <a type="button" class="btn btn-primary" id="{{apartment.id}}" href="{% url 'apartment:view-apartment' apartment.id %}">View </a>
+  </div>
+</div>

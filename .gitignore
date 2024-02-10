@@ -1,2 +1,4 @@
 venv/
-req.txt
+ERD/req.txt
+ERD/ERD.drawio
+*.sqlite3

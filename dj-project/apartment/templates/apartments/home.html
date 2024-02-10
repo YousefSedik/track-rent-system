@@ -1,0 +1,29 @@
+{% extends 'apartments/base.html' %}
+
+{% block title %}View Apartments{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    
+    <h1>Welcome {{ user.name }}
+    </h1>   
+    <div class="row">
+      <div class="col">
+        <h5>
+          <a href="{% url 'apartment:add-apartment' %}" class="btn btn-primary">Add Apartment</a>
+        </h5>
+      </div>
+      <div class="col-6">
+        {% for apartment in apartment_list  %}
+            {% include 'apartments/components/apart_card.html' %}
+
+        {% endfor %}
+      </div>
+      <div class="col">
+      </div>
+    </div>
+    </div>
+  </div>
+
+{% endblock content %}
+    

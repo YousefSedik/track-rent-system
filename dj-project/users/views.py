@@ -10,15 +10,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-class SignUpView(LoginRequiredMixin, View):
+class SignUpView(View, LoginRequiredMixin):
     redirect_authenticated_user = True  
-
     def get(self, request, *args, **kwargs):
         context = {
             'form': forms.CustomUserCreationForm()
         }
         return render(request, 'users/sign-up.html', context=context)
-    
+
     def post(self, request, *args, **kwargs):
         form = forms.CustomUserCreationForm(request.POST or None)
         context = {'form': form}
@@ -28,16 +27,15 @@ class SignUpView(LoginRequiredMixin, View):
             return redirect('/')
         
         return render(request, 'users/sign-up.html', context=context)
-        
-
-
-class LoginView(LoginRequiredMixin, View):
+  
+class LoginView(View, LoginRequiredMixin):
     redirect_authenticated_user = True  
     def get(self, request, *args, **kwargs):
         context = {
             'form':forms.CustomLoginForm()
         }
         return render(request, 'users/login.html', context=context)
+    
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email') 
         password = request.POST.get('password') 
@@ -55,7 +53,8 @@ class LoginView(LoginRequiredMixin, View):
         
 
 def Logout(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         logout(request)
+        return redirect('/login')
     else:
         return redirect('/')

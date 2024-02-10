@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-vmn-#_7%c86plbyqc2n)@*+c31d@&gb+vj*&6v4z#&n8lfce&d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,6 +40,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_htmx', 
     'phonenumber_field',
+    "django_bootstrap5",
+    'widget_tweaks',
     
     # Internal Apps
     'users.apps.UsersConfig', 
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
         
-
+    # External Middleware
     'django_htmx.middleware.HtmxMiddleware'
 ]
 
@@ -146,3 +147,5 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
+LOGIN_URL = 'login'

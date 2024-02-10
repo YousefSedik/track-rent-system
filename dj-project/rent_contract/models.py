@@ -10,10 +10,10 @@ class RentContract(models.Model):
     tenant_phone_number = PhoneNumberField()
     rent_price = models.IntegerField()
     start_rent_date = models.DateField()
-    duration_in_months = models.PositiveSmallIntegerField(validators=[
+    duration_in_months = models.PositiveSmallIntegerField(default = 6, validators=[
         MaxValueValidator(12), MinValueValidator(1), 
     ])
-    end_rent_date = models.DateField()
+    end_rent_date = models.DateField(null=True)
     notify_me = models.BooleanField(default=True)
     contract_photo = models.ImageField(blank=True)
     notes = models.TextField(blank=True)

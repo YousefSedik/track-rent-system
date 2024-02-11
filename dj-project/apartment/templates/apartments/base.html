@@ -3,7 +3,9 @@
     {% block title %}  {% endblock title %}
 </title>
 {% include 'apartments/components/navbar.html' %}
-
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    
+</body>
 {% block content %}
 
 

@@ -1,0 +1,14 @@
+<li class="object-fit-contain list-group-item" id="video-{{ video.id}}">
+    
+    
+    <video  controls src="{{ video.video.url }}" alt="" width="800" height="300" >
+    </video>
+    <a class="btn btn-danger mt-2" type="submit"
+    hx-delete="{% url 'apartment:delete_media' video.id %}"
+    hx-target="video-{{ video.id}}"
+    hx-confirm="Are You Sure To Delete this video? "
+    hx-swap="delete"
+    >Delete</a>
+</li>
+
+

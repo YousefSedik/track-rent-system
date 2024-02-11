@@ -1,0 +1,9 @@
+<li class="object-fit-contain list-group-item" id="photo-{{ photo.id }}">
+            
+    <img src="{{ photo.photo.url }}" alt="" width="300" height="300" >
+    <a class="btn btn-danger mt-2" type="submit"
+    hx-post="{% url 'apartment:delete_media' photo.id %}"
+    hx-target="#photo-{{ photo.id }}"
+    hx-swap="delete"
+    >Delete</a>
+</li>

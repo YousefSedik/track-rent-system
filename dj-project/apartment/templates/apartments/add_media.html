@@ -1,0 +1,55 @@
+{% extends 'apartments/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+    Add Media Page
+{% endblock title %}
+    
+{% block content %}
+ <div class="container">
+    <!-- Photos -->
+    <ul class="" id="photos">
+        {% for photo in photos %}
+            
+        {% include 'apartments/components/htmx-add-photo.html' %}
+
+        {% endfor %}
+    </ul>
+    <form 
+        hx-post="{% url 'apartment:add-media' pk %}"
+        hx-target="#photos"
+        hx-encoding="multipart/form-data"
+        hx-swap="beforeend"
+    >
+        {% include 'apartments/components/add_media.html' %}
+    <button 
+    
+    type="submit" 
+    class="btn btn-info mt-2">
+     Add Photo
+    </button>
+    </form>
+         <hr>
+    <!-- Videos -->
+    <ul class="list-group" id="videos">
+        {% for video in videos %}
+            
+        {% endfor %}
+    </ul>
+    <form 
+        hx-post="{% url 'apartment:add-media' pk  %}"
+        hx-target="#videos"
+        hx-encoding="multipart/form-data"
+        hx-swap="beforeend"
+    >
+        {% include 'apartments/components/add_media.html' %}
+    <button 
+    
+    type="submit" 
+    class="btn btn-info mt-2">
+     Add Video
+    </button>
+    </form>
+ </div>
+{% endblock content %}
+    

@@ -2,3 +2,5 @@ venv/
 ERD/req.txt
 ERD/ERD.drawio
 *.sqlite3
+dj-project/media/photos/
+dj-project/media/videos/

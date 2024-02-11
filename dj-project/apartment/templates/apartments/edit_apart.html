@@ -6,15 +6,19 @@
 {% endblock title %}
     
 {% block content %}
- <div class="container">
 
+{% if apartment.owner == user %}
+    
+<div class="container">
+    <a href="{% url 'apartment:add_media_page' apartment.id %}" class="btn btn-info mt-2"> Add/Edit Media </a>
      <form method="post" class="form">
          {% csrf_token %}
      
          {% bootstrap_form form %}
-     
+
          {% bootstrap_button button_type="submit" content="Update" %}
      </form>
  </div>
+{% endif %}
 {% endblock content %}
     

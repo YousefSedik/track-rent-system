@@ -9,26 +9,8 @@
   <div class="card">
     <div class="card-body">
 
-      {% if apartment.owner == user %}
-      <div class="form-check">
-
-        <input hx-get="{% url 'apartment:reversePublicity' apartment.id %}" hx-trigger="click" class="form-check-input"
-          type="checkbox" value="" {% if apartment.public_visibility %} checked {% endif %}>
-
-        <label class="form-check-label" for="flexCheckIndeterminate">
-          <h6>Public Visibility (Apartment price Will be invisible )</h6>
-        </label>
-      </div>
-      {% endif %}
-
-      <h1> Apartment Details
-        {% if apartment.owner == user %}
-        <a href="{% url 'apartment:edit-apartment' apartment.id %} ">Edit </a>
-        <br>
-        <a href="{% url 'apartment:add_media_page' apartment.id %}" class="btn btn-info mt-2"> Add/Edit Media </a>
-
-        {% endif %}
-      </h1>
+      {% include 'apartments/components/view_apart_header.html' %}
+      <br>
       <h4>Location: {{apartment}}</h4>
       <h4>Rent Price: {{ apartment.rent_price|default:"Not specified" }}</h4>
       {% if apartment.owner == user %}

@@ -8,13 +8,6 @@
 {% block content %}
  <div class="container">
     <!-- Photos -->
-    <ul class="" id="photos">
-        {% for photo in photos %}
-            
-        {% include 'apartments/components/htmx-add-photo.html' %}
-
-        {% endfor %}
-    </ul>
     <form 
         hx-post="{% url 'apartment:add-media' pk %}"
         hx-target="#photos"
@@ -29,11 +22,21 @@
      Add Photo
     </button>
     </form>
+    <ul class="" id="photos">
+        {% for photo in photos %}
+            
+        {% include 'apartments/components/htmx-add-photo.html' %}
+
+        {% endfor %}
+    </ul>
+    
          <hr>
     <!-- Videos -->
     <ul class="list-group" id="videos">
         {% for video in videos %}
-            
+
+        {% include 'apartments/components/htmx-add-video.html' %}
+        
         {% endfor %}
     </ul>
     <form 

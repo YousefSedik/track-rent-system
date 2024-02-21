@@ -18,26 +18,30 @@ class ApartmentView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super(ApartmentView, self).get_queryset()
         queryset = queryset.filter(owner=self.request.user)
-        queryset = queryset.annotate(
-            first_photo=Subquery(
-                Photo.objects.filter(apartment_id=OuterRef('pk')).order_by('pk').values('photo')[:1]
-            )
-        )
-        return queryset
 
+        first_photo_subquery = Subquery(
+            Photo.objects.filter(apartment_id=OuterRef('pk')).order_by('pk').values('photo')[:1]
+        )
+        queryset = queryset.annotate(first_photo=first_photo_subquery)
+
+        return queryset
+    
+    
+from django.template import Template
+import datetime
 class ViewApartmentView(DetailView):
     model = Apartment 
     template_name = 'apartments/view_apart.html'
     context_object_name = 'apartment'
     
-    def get_queryset(self):
+    def get_queryset(self):        
         return Apartment.objects.filter(pk=self.kwargs.get('pk'))
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['photos'] = Photo.objects.filter(apartment=context['apartment'])
         context['videos'] = Video.objects.filter(apartment=context['apartment'])
-        print(context['videos'])
+        context['paying_dates'] = context['apartment'].get_contract_paying_dates()
         return context
 class AddApartmentView(LoginRequiredMixin, CreateView): 
     login_url = "/login/"
@@ -92,8 +96,6 @@ def add_media_page(request, pk):
         'videos': videos,
         'pk': pk
     }
-    if videos:
-        print(videos[0])
     return render(request, 'apartments/add_media.html', context)    
 
 
@@ -123,7 +125,7 @@ def delete_media(request, pk):
 
     elif request.htmx.target[0] == 'v':
         video = Video.objects.get(pk=pk)
-        if request.user == photo.apartment.owner:
+        if request.user == video.apartment.owner:
             video.delete()
 
     return HttpResponse('')

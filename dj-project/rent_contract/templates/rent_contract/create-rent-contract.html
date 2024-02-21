@@ -1,0 +1,16 @@
+{% extends 'apartments/base.html' %}
+
+{% block title %}
+    sdasd
+{% endblock title %}
+    
+{% block content %}
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create">
+        </form>
+    </div>
+{% endblock content %}
+    

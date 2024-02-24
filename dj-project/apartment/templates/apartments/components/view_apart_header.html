@@ -25,8 +25,11 @@
             hx-delete="{% url 'rent_contract:cancel_contract' paying_dates.first.contract.id %}"
             hx-target="#apart-header" hx-swap="outerHTML"
             hx-confirm="Are You Sure To cancel the contract? ">Cancel Contract </button>
+        <a href="{% url 'rent_contract:contract-details' paying_dates.first.contract.id %}"
+        class="btn btn-warning"
+        >Contract Details</a>
         {% else %}
-        <a href="{% url 'rent_contract:create-contract' %}" class="btn btn-success">Add Contract </a>
+        <a href="{% url 'rent_contract:create-contract' apartment.id %}" class="btn btn-success">Add Contract </a>
         {% endif %}
 
         {% endif %}

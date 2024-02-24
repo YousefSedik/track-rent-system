@@ -1,6 +1,12 @@
 <div class="container text-center" id="container">
     <div class="row align-items-center" >
       <!-- {{paying_dates}} -->
+      
+      {% for message in messages %}
+        <h5>{{ message }}</h5>
+      {% endfor %}
+        <br>
+      
       {% for pay_date in paying_dates %}
 
       <div class="col" 
@@ -24,11 +30,7 @@
           >Mark As Paid.</a>
         </div>
         
-        
-        
         {% endfor %}
-        
-        
-
+     
     </div>
   </div>

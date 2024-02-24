@@ -27,10 +27,9 @@ class RentContract(models.Model):
         MaxValueValidator(12), MinValueValidator(1), 
     ])
     notify_me = models.BooleanField(default=True)
-    contract_photo = models.ImageField(null=True, blank=True)
+    contract_photo = models.ImageField(null=True, blank=True, upload_to='photos/')
     notes = models.TextField(null=True, blank=True)
 
-   
     def generatePayingDates(self):
         add_date = relativedelta(months=1)
         date = self.start_rent_date
@@ -42,9 +41,8 @@ class RentContract(models.Model):
         pass
     
     def cancelContract(self):
-        '''
-         Setting the rest of the months as canceled 
-        '''
+        'Setting the rest of the months as canceled'
+         
         associatedPayingDates = PayingDates.objects.filter(contract=self) 
         for month in associatedPayingDates:
             if not month.is_paid:
@@ -71,6 +69,10 @@ def post_save_generate(created, instance, *args, **kwargs):
 def can_be_rented(instance, **kwargs):
     if not instance.apartment.is_rented and instance.id is None:
         instance.apartment.is_rented = True
-        instance.apartment.save()        
+        if instance.rent_price:
+            instance.apartment.rent_price = instance.rent_price
+
+        instance.apartment.save()
+
     elif instance.apartment.is_rented:
         raise RuntimeError("Apartment Can't have 2 contracts in the same time.")

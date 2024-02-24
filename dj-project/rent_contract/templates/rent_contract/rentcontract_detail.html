@@ -1,0 +1,30 @@
+{% extends 'apartments/base.html' %}
+
+{% block title %}
+    Contract Details. 
+{% endblock title %}
+    
+{% block content %}
+
+        <div class="container">
+            {% include 'apartments/components/show_paying_dates.html' %}
+            <br><h3>Tenant Name: {{contract.tenant_name}}</h3>
+            <h3>Tenant Phone Number: {{contract.tenant_phone_number}}</h3>
+            <h3> Rent Price: {{contract.rent_price}} </h3>
+            <h3>Contract Duration: {{contract.duration_in_months}}  Months </h3>
+            <h3>
+                {% if contract.notes %}
+                Notes: <br> {{contract.notes}}
+                <hr>
+            {% endif %}
+            </h3>
+            {% if contract.contract_photo %}
+                <h3>
+                    Contract Copy <br>
+                    <img src="{{ contract.contract_photo.url }}" alt="" width="500" height="500">
+                </h3><br>
+            {% endif %}
+        </div>
+        
+{% endblock content %}
+    

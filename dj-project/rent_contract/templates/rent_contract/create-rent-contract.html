@@ -1,16 +1,24 @@
 {% extends 'apartments/base.html' %}
-
+{% load widget_tweaks %}
 {% block title %}
-    sdasd
+
 {% endblock title %}
     
 {% block content %}
-    <div class="form">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Create">
-        </form>
+    <div class="container mt-2">
+        <div class="form">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                Tenant Name:{% render_field form.tenant_name class="form-control" %}
+                Tenant Phone Number:{% render_field form.tenant_phone_number class="form-control" %}
+                Rent Price:{% render_field form.rent_price class="form-control"%}
+                Contract Duration:{% render_field form.duration_in_months max=12 min=1 class="form-control"%}
+                <br> Notify Me: {% render_field form.notify_me class="form-check-input" %}
+                <br> <br>Contract Photo: {% render_field form.contract_photo class="form-control" %}
+                Notes: {% render_field form.notes class="form-control"  %}
+                <button type="submit" class="btn btn-primary mt-2 mp-2"> Create</button>
+            </form>
+        </div>    
     </div>
 {% endblock content %}
     

@@ -1,0 +1,58 @@
+{% extends 'apartments/base.html' %}
+
+
+{% block title %}
+    Track Rent 
+{% endblock title %}
+    
+{% block content %}
+<div class="container mt-5">
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">is_paid</th>
+        <th scope="col">Rent price</th>
+        <th scope="col">tenant name</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+        {% for pay_date  in  pay_dates %}
+        
+            
+            {% if pay_date.is_canceled %}
+                <tr class="table-danger">
+            {% endif %}
+                
+            <th scope="row">{{pay_date.date}}</th>
+            <td>{{pay_date.is_paid}}</td>
+            <td>{{pay_date.contract.rent_price}}</td>
+            <td>{{pay_date.contract.tenant_name}}</td>
+        </tr>
+        {% endfor %}
+            
+    </tbody>
+  </table>
+    <!-- paginator -->
+    <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %}
+  
+          <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+  
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+  </div>
+</div>
+
+{% endblock content %}
+    

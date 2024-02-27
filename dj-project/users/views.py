@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from phonenumber_field.phonenumber import PhoneNumber
 # Create your views here.
 
 class SignUpView(View):
@@ -23,21 +23,33 @@ class SignUpView(View):
         if request.user.is_authenticated:
             return redirect('/')
         form = forms.CustomUserCreationForm(request.POST or None)
-        email, pw1, pw2, pn = request.POST.get('email'), request.POST.get('password1'), \
-                            request.POST.get('password2'), request.POST.get('phone_number')
+        re_post = request.POST
+        email, pw1, pw2, pn = re_post.get('email'), re_post.get('password1'), \
+                            re_post.get('password2'), re_post.get('phone_number')
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, 'Email Already Exists!')
-        elif CustomUser.objects.filter(phone_number=pn).exists():
+        if CustomUser.objects.filter(phone_number=pn).exists():
             messages.error(request, 'Phone Number Already Exists!')
-        elif pw1 != pw2:
+        if pw1 != pw2:
             messages.error(request, 'password and password confirmation Should Match!')
+        from django.contrib.auth.password_validation import validate_password
+        from django.core.exceptions import ValidationError
+        from phonenumber_field.validators import validate_international_phonenumber
+        try:
+            validate_password(password=pw1)
+        except ValidationError:
+            messages.error(request, 'password is kinda weak ')
+        try: 
+            validate_international_phonenumber(pn)
+        except ValidationError:
+            messages.error(request, 'Please Enter The Phone-Country First Like The following: +201032479669')
 
         context = {'form': form}
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('/')
-
+      
         return render(request, 'users/sign-up.html', context=context)
   
 class LoginView(View):
@@ -67,9 +79,10 @@ class LoginView(View):
             return render(request, 'users/login.html', context=context)
         
 
-def Logout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect('/login')
-    else:
-        return redirect('/')
+class LogoutView(View):
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            logout(self.request)
+            return redirect('/login')
+        else:
+            return redirect('/')

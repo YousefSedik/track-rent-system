@@ -63,7 +63,6 @@ class CancelContractView(View):
             context['apartment'] = current_contract.apartment
             context['paying_dates'] = context['apartment'].get_contract_paying_dates()
 
-
         return render(request, 'apartments/components/view_apart_header.html', context)
 
 class ViewTrackRent(ListView):

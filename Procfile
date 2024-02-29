@@ -1,1 +1,1 @@
-web: gunicorn rent-tracker.wsgi 
+web: gunicorn rent_tracker.wsgi 

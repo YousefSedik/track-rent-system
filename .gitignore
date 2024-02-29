@@ -3,5 +3,6 @@ venv/
 ERD/req.txt
 ERD/ERD.drawio
 *.sqlite3
-media/photos/*  
-media/videos/*
+*.png
+*.mp4
+*.jpeg

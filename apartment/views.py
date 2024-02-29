@@ -94,7 +94,6 @@ class ReversePublicityView(View):
             apartment.reverse_public_visibility()
         return HttpResponse("")
 
-
 class DeleteApartmentView(View):
     def post(self, *args, **kwargs):
         request = self.request

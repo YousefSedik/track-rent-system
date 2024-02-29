@@ -58,7 +58,9 @@ class AddApartmentView(LoginRequiredMixin, CreateView):
     form_class = forms.AddApartmentForm
     template_name = "apartments/add_apartment.html"
     success_url = "/"
-
+    def dispatch(self, request, *args, **kwargs):
+        
+        return super(EditApartmentView, self).dispatch(request, *args, **kwargs)
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super(AddApartmentView, self).form_valid(form)
@@ -74,12 +76,15 @@ class EditApartmentView(LoginRequiredMixin, UpdateView):
         "notes",
         "rent_price",
     ]
-    success_url = "/"
-
+    
+    def dispatch(self, request, *args, **kwargs):
+        get_object_or_404(Apartment, pk=kwargs['pk'], owner=request.user)
+        return super(EditApartmentView, self).dispatch(request, *args, **kwargs)
+    
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
-        super(EditApartmentView, self).save(form)
+        return super(EditApartmentView, self).save(form)
 
 
 class ReversePublicityView(View):

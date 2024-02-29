@@ -8,6 +8,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from phonenumber_field.phonenumber import PhoneNumber
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from phonenumber_field.validators import validate_international_phonenumber
+
 # Create your views here.
 
 class SignUpView(View):
@@ -32,14 +36,12 @@ class SignUpView(View):
             messages.error(request, 'Phone Number Already Exists!')
         if pw1 != pw2:
             messages.error(request, 'password and password confirmation Should Match!')
-        from django.contrib.auth.password_validation import validate_password
-        from django.core.exceptions import ValidationError
-        from phonenumber_field.validators import validate_international_phonenumber
+
         try:
             validate_password(password=pw1)
         except ValidationError:
-            messages.error(request, 'password is kinda weak ')
-        try: 
+            messages.error(request, 'Please enter a stronger password')
+        try:
             validate_international_phonenumber(pn)
         except ValidationError:
             messages.error(request, 'Please Enter The Phone-Country First Like The following: +201032479669')
@@ -49,7 +51,7 @@ class SignUpView(View):
             user = form.save()
             login(request, user)
             return redirect('/')
-      
+
         return render(request, 'users/sign-up.html', context=context)
   
 class LoginView(View):

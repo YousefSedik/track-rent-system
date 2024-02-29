@@ -14,7 +14,7 @@ urlpatterns = [
 
 htmx_urlpatterns = [
     path('reversePublicity/<int:pk>', views.ReversePublicityView.as_view(), name='reversePublicity'),
-    path('add-media/<int:pk>', views.AddMediaView.as_view(), name='add-media' ),
+    path('add-media/<int:pk>', views.AddMediaObjectView.as_view(), name='add-media' ),
     path('delete-media/<int:pk>', views.DeleteMediaView.as_view(), name='delete_media'),
     
 ]

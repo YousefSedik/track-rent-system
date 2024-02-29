@@ -1,2 +1,1 @@
-web: gunicorn track-realstate.wsgi 
- 
+web: gunicorn rent-tracker.wsgi 

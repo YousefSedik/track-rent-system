@@ -95,13 +95,11 @@ WSGI_APPLICATION = 'rent_tracker.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "OPTIONS": {
-            'user':'postgres.cjzrszvhwerqkvptsdfd',
-            'password':"4mQkKu2jUrecmUOfRZwQ", 
-            'host':"aws-0-eu-central-1.pooler.supabase.com",
-            'port':5432, 
-            'dbname':'postgres', 
-        },
+        'NAME':'postgres',       
+        'USER':'postgres.cjzrszvhwerqkvptsdfd',
+        'PASSWORD':"4mQkKu2jUrecmUOfRZwQ", 
+        'HOST':"aws-0-eu-central-1.pooler.supabase.com",
+        'PORT':'5432', 
     }
 }
 

@@ -1,2 +1,2 @@
-web gunicorn track-realstate.wsgi:application --log-file -
+web: gunicorn track-realstate.wsgi 
  

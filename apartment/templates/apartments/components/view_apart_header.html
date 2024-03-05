@@ -1,8 +1,10 @@
-{% if apartment.owner == user and apartment.is_rented %}
+{% if apartment.owner == user %}
 <div class="apart-header" id="apart-header">
-    <!-- paying_dates -->
-    {% include 'apartments/components/show_paying_dates.html' %}
-    <br>
+    {% if apartment.is_rented %}
+        <!-- paying_dates -->
+        {% include 'apartments/components/show_paying_dates.html' %}
+        <br>
+    {% endif %}
     <div class="form-check">
         <input hx-get="{% url 'apartment:reversePublicity' apartment.id %}" hx-trigger="click" class="form-check-input"
             type="checkbox" value="" {% if apartment.public_visibility %} checked {% endif %}>
@@ -11,7 +13,7 @@
             <h6>Public Visibility (Apartment price Will not be visible )</h6>
         </label>
     </div>
-    {% endif %}
+{% endif %}
 
     <h1> Apartment Details
         {% if apartment.owner == user %}

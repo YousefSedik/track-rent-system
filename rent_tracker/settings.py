@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     "django_bootstrap5",
     'widget_tweaks',
-    
+    'django_extensions',
+    'debug_toolbar',
     # Internal Apps
     'users.apps.UsersConfig', 
     'apartment.apps.ApartmentConfig', 
@@ -57,13 +58,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        
+
     # External Middleware
-    'django_htmx.middleware.HtmxMiddleware'
+    'django_htmx.middleware.HtmxMiddleware',
 ]
 
 ROOT_URLCONF = 'rent_tracker.urls'
@@ -91,27 +93,26 @@ WSGI_APPLICATION = 'rent_tracker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME':'postgres',       
-        'USER':'postgres.cjzrszvhwerqkvptsdfd',
-        'PASSWORD':"4mQkKu2jUrecmUOfRZwQ", 
-        'HOST':"aws-0-eu-central-1.pooler.supabase.com",
-        'PORT':'5432', 
-    }
-}
-
-
+# user=postgres.cjzrszvhwerqkvptsdfd password=[YOUR-PASSWORD] 
+# host=aws-0-eu-central-1.pooler.supabase.com port=5432
+# dbname=postgres
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         'NAME':'postgres',       
+#         'USER':'postgres.cjzrszvhwerqkvptsdfd',
+#         'PASSWORD':"4mQkKu2jUrecmUOfRZwQ", 
+#         'HOST':"aws-0-eu-central-1.pooler.supabase.com",
+#         'PORT':'5432', 
 #     }
 # }
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -151,7 +152,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-django_heroku.settings(locals())
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -166,3 +166,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 LOGIN_URL = 'login'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+django_heroku.settings(locals())

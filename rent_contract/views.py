@@ -71,13 +71,17 @@ class ViewTrackRent(ListView):
     context_object_name = 'pay_dates'
     paginate_by = 15
     def get_queryset(self):
+        # After Optimization:
+
         queryset = super(ViewTrackRent, self).get_queryset()
-        queryset = queryset.filter(apartment__owner = self.request.user)
-        pay_dates = PayingDates.objects.none()
-        for contract in queryset:
-            pay_dates |= PayingDates.objects.filter(contract=contract)
+        pay_dates = PayingDates.objects.filter(contract__in = queryset).select_related('contract')
         
-        pay_dates = pay_dates.order_by('date')
+        # Before:
+
+        # queryset = RentContract.objects.filter(apartment__owner = self.request.user)
+        # pay_dates = PayingDates.objects.none()
+        # for contract in queryset:
+        #     pay_dates |= PayingDates.objects.filter(contract=contract)
+        # pay_dates = pay_dates.order_by('date')
+        
         return pay_dates
-    
-    

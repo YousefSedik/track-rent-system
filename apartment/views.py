@@ -52,7 +52,6 @@ class ViewApartmentView(DetailView):
         context["paying_dates"] = context["apartment"].get_contract_paying_dates()
         return context
 
-
 class AddApartmentView(LoginRequiredMixin, CreateView):
     login_url = "/login/"
     form_class = forms.AddApartmentForm

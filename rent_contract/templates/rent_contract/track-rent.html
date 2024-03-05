@@ -20,11 +20,12 @@
         
         {% for pay_date  in  pay_dates %}
         
-            
             {% if pay_date.is_canceled %}
+
                 <tr class="table-danger">
+            
             {% endif %}
-                
+
             <th scope="row">{{pay_date.date}}</th>
             <td>{{pay_date.is_paid}}</td>
             <td>{{pay_date.contract.rent_price}}</td>

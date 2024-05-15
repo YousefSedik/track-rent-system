@@ -6,6 +6,9 @@ from users.models import CustomUser
 from django.http.response import HttpResponse
 from django.contrib import messages
 from . import forms
+from datetime import * 
+from dateutil.relativedelta import *
+
 
 # Create your views here.
 
@@ -73,8 +76,11 @@ class ViewTrackRent(ListView):
     def get_queryset(self):
         # After Optimization:
 
-        queryset = super(ViewTrackRent, self).get_queryset()
-        pay_dates = PayingDates.objects.filter(contract__in = queryset).select_related('contract')
+        queryset = RentContract.objects.filter(apartment__owner=self.request.user)
+        print(queryset)
+        pay_dates = PayingDates.objects.filter(contract__in = queryset).\
+            select_related('contract')\
+                .filter(date__lte=datetime.now())
         
         # Before:
 
@@ -82,6 +88,6 @@ class ViewTrackRent(ListView):
         # pay_dates = PayingDates.objects.none()
         # for contract in queryset:
         #     pay_dates |= PayingDates.objects.filter(contract=contract)
-        # pay_dates = pay_dates.order_by('date')
+        # pay_dates = pay_dates.order_by('date').filter(date__lte=datetime.now())
         
         return pay_dates

@@ -7,3 +7,8 @@ ERD/ERD.drawio
 *.mp4
 *.jpeg
 .env
+media/photos/*
+media/videos/*
+*.xml
+*.iml
+*idea
